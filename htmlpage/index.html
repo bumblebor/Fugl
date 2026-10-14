@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>FUGL</title>
+        <style>
+            .heading{
+                background-color :blue;
+                color: orange;
+                padding:20px
+            }
+        </style>
+        <script type="module" src="./index.js" ></script>
+        <script src="test.js" defer></script>
+
+    </head>
+    <body>
+
+        <div>
+            <h1 class="heading">
+                FUGL
+            </h1>
+        </div>
+        <div>
+            <h2>
+                Flight Data
+            </h2>
+        </div>
+        <div>
+            <form id = "submitForm">
+                Flight Duration (minutes): <input type="number" id="minutes" min = 1 step = 1>
+            </form>
+            <button id="submit">Submit</button>
+            <p id="cost">
+                HERE
+            </p>
+        </div>
+        <script>
+            const element = document.getElementById("cost");
+            async function getData(){
+                const res = await fetch('/get-data')
+                const resOUT = await res.json()
+                return resOUT
+            }
+            document.getElementById('submit').addEventListener('click',()=>{
+                var travelMin = document.getElementById("minutes").value
+                getData().then((result)=>{element.innerHTML = result.message * travelMin}).catch((error)=>console.error('ERROR:',error))
+            })
+
+            </script>
+    </body>
+</html>

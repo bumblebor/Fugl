@@ -1,7 +1,7 @@
 {
   "name": "fugl",
   "version": "1.0.0",
-  "type":"module",
+  "type": "commonjs",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -14,9 +14,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
   "bugs": {
     "url": "https://github.com/bumblebor/Fugl/issues"
   },
-  "homepage": "https://github.com/bumblebor/Fugl#readme"
+  "homepage": "https://github.com/bumblebor/Fugl#readme",
+  "dependencies": {
+    "express": "^5.3.0",
+    "puppeteer": "^25.13.0"
+  }
 }
