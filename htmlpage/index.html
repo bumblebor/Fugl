@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>FUGL</title>
+        <style>
+            .heading{
+                background-color :#5e5ec6;
+                color: #f3a453;
+                line-height: 1.1;
+                padding:20px;
+                text-align:center;
+                border-radius: 5px
+            }
+            body{
+                background-color: rgb(130, 224, 255);
+            }
+        </style>
+        <script type="module" src="./index.js" ></script>
+
+        
+    </head>
+    <body>
+
+        <div>
+            <h1 class="heading">
+                <b>FUGL</b>
+            </h1>
+        </div>
+        <div>
+            <h2>
+                Flight Data
+            </h2>
+        </div>
+        <div>
+            <form id = "submitForm">
+                <br> Arrival:
+                <select name="arrival" id="arrival">
+                    <option value="JFK">John F. Kennedy International Airport</option>
+                    <option value="LAX">Los Angeles International Airport</option>
+                    <option value="MIA">Miami International Airport</option>
+                    <option value="SFO">San Franscisco International Airport</option>
+                    <option value="EWR">Newark Liberty International Airport</option>
+                    <option value="ORD">O'Hare International Airport</option>
+                    <option value="ATL">Hartsfield-Jackson Atlanta International Airport</option>
+                    <option value="DFW">Dallas International Airport</option>
+                    <option value="LHR">London Heathrow</option>
+                    <option value="LGW">London Gatwick Airport</option>
+                    <option value="MAN">Manchester Airport</option>
+                    <option value="DEL">Indira Gandhi Iternational Airport</option>
+                    <option value="YCB">Cambridge Bay Airport</option>
+                    <option value="YBR">Brandon Municipal Airport</option>
+                    <option value="KIX">Kansai International Airport</option>
+                </select>
+                <br>
+                Departure:
+                <select name="departure" id="departure">
+                    <option value="JFK">John F. Kennedy International Airport</option>
+                    <option value="LAX">Los Angeles International Airport</option>
+                    <option value="MIA">Miami International Airport</option>
+                    <option value="SFO">San Franscisco International Airport</option>
+                    <option value="EWR">Newark Liberty International Airport</option>
+                    <option value="ORD">O'Hare International Airport</option>
+                    <option value="ATL">Hartsfield-Jackson Atlanta International Airport</option>
+                    <option value="DFW">Dallas International Airport</option>
+                    <option value="LHR">London Heathrow</option>
+                    <option value="LGW">London Gatwick Airport</option>
+                    <option value="MAN">Manchester Airport</option>
+                    <option value="DEL">Indira Gandhi Iternational Airport</option>
+                    <option value="YCB">Cambridge Bay Airport</option>
+                    <option value="YBR">Brandon Municipal Airport</option>
+                    <option value="KIX">Kansai International Airport</option>
+                </select>
+            </form>
+            <button id="submit">Submit</button>
+            <p id="cost">
+                
+            </p>
+            <h1 id="explaination">How we calculate cost</h1>
+            <p>FUGL (Flights Under Guided Lookup) calculates the fair price of your flights based off of <br> the current day's fuel cost for planes and the distance between airports. We use <br>up-to-date information about fuel price to determine the fairest price. FUGL <br>does not always predict exact prices, but rather aims to give a fair price for your booking.<br> As a result, prices may fluctuate above or below the price listed here.</p>
+        </div>
+
+        <script>
+            const element = document.getElementById("cost");
+            async function getData(){
+                const res = await fetch('/data')
+                const resOUT = await res.json()
+                return parseFloat(resOUT.fuelcost)
+            }
+            async function getDistances(){
+                var url = "https://airportgap.com/api/airports/distance"
+                console.log(document.getElementById('departure').value)
+                var sending = {
+                    from:document.getElementById('departure').value,
+                    to:document.getElementById('arrival').value
+                }
+                try{
+                    var response = await fetch(url, {method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify(sending)})
+                    if(!response.ok){
+                        throw new ERROR(`HTTP ERROR: Status ${response.status}`)
+                    }
+                    const result = await response.json();
+                    distance = parseFloat(JSON.stringify(result.data.attributes.miles))
+                    var isInternational = true
+                    if (result.data.attributes.from_airport.country === result.data.attributes.to_airport.country){
+                        isInternational = false
+                    }
+                    var catchSameAirport = false
+                    if(result.data.attributes.from_airport.iata === result.data.attributes.to_airport.iata){
+                        catchSameAirport = true
+                    }
+                    let data = []
+                    data.push(distance)
+                    data.push(isInternational) 
+                    data.push(catchSameAirport)
+                    return data
+                }
+                catch(error){
+                    console.error("Error:", error)
+                }
+            }
+            document.getElementById('submit').addEventListener('click',async ()=>{
+                const cost = await getData()
+                const distance = await getDistances()
+                if (distance[2] == false){
+                    if(distance[1] == true){
+                        element.innerHTML = "Your fair price is: " + Math.round(100*(Math.log(cost*Math.pow(distance[0]-30,3.05))/Math.log(1.09)))/100
+                    }
+                    else{
+                        element.innerHTML = "Your fair price is: " + Math.round(100*(Math.log(cost*Math.pow(distance[0]*1.03-25,1.73))/Math.log(1.1475)+10))/100
+                    }
+                }
+                else{
+                    element.innerHTML= "Both airports cannot be the same: Please select two seperate airports"
+                }
+            })
+
+            </script>
+                
+    </body>
+</html>

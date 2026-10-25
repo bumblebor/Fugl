@@ -1,4 +1,13 @@
-import puppeteer from "puppeteer"
+const puppeteer =require("puppeteer")
+const express = require('express')
+const bodyParser = require('body-parser')
+const path = require('path')
+const app = express()
+app.use(bodyParser.json())
+app.use(express.json())
+app.use(express.static('htmlpage'))
+const port = 3000
+var costVal = 0
 const getFuelCost = async() =>{
 //Here we will use Puppeteer to scrape the web
 //We want to get the price of plane fuel, which can be used for our calculations
@@ -21,9 +30,23 @@ const priceRaw = await page.evaluate(() => {
     let priceNum = parseFloat(price.match(/\d*\.\d\d/)[0])
     return priceNum
 });
-console.log(priceRaw);
+costVal = priceRaw
+console.log(costVal);
+
+
 await browser.close();
 }
 
-//Start scraper
-getFuelCost()
+//Start Scraping
+    getFuelCost()
+
+app.get('/data', (req, res) => {
+    dailyCost = {
+        fuelcost:costVal
+    }
+    console.log("Called at " + new Date())
+    res.json(dailyCost) 
+});
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
+});
