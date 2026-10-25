@@ -36,12 +36,13 @@ console.log(costVal);
 
 await browser.close();
 }
+
+//Start Scraping
     getFuelCost()
 
-//Start scraper
-app.get('/get-data', (req, res) => {
+app.get('/data', (req, res) => {
     dailyCost = {
-        message:costVal
+        fuelcost:costVal
     }
     console.log("Called at " + new Date())
     res.json(dailyCost) 
