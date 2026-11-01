@@ -12,6 +12,12 @@
                 text-align:center;
                 border-radius: 5px
             }
+            .sel{
+                background-color:#e2D2ff;
+                line-height: 1.5;
+                padding:15px;
+                border-radius:15px
+            }
             body{
                 background-color: rgb(130, 224, 255);
             }
@@ -35,7 +41,7 @@
         <div>
             <form id = "submitForm">
                 <br> Arrival:
-                <select name="arrival" id="arrival">
+                <select name="arrival" id="arrival" class="sel">
                     <option value="JFK">John F. Kennedy International Airport</option>
                     <option value="LAX">Los Angeles International Airport</option>
                     <option value="MIA">Miami International Airport</option>
@@ -54,7 +60,7 @@
                 </select>
                 <br>
                 Departure:
-                <select name="departure" id="departure">
+                <select name="departure" id="departure" class="sel">
                     <option value="JFK">John F. Kennedy International Airport</option>
                     <option value="LAX">Los Angeles International Airport</option>
                     <option value="MIA">Miami International Airport</option>
@@ -77,7 +83,7 @@
                 
             </p>
             <h1 id="explaination">How we calculate cost</h1>
-            <p>FUGL (Flights Under Guided Lookup) calculates the fair price of your flights based off of <br> the current day's fuel cost for planes and the distance between airports. We use <br>up-to-date information about fuel price to determine the fairest price. FUGL <br>does not always predict exact prices, but rather aims to give a fair price for your booking.<br> As a result, prices may fluctuate above or below the price listed here.</p>
+            <p>FUGL (Flights Under Guided Lookup) calculates the fair price of your flights based off of <br> the current day's fuel cost for planes and the distance between airports. We use <br>up-to-date information about fuel price to determine the fairest price possible. FUGL <br>does not always predict exact prices, but rather aims to give a fair price for your booking.<br> As a result, prices may fluctuate above or below the price listed here.</p>
         </div>
 
         <script>
@@ -126,10 +132,10 @@
                 const distance = await getDistances()
                 if (distance[2] == false){
                     if(distance[1] == true){
-                        element.innerHTML = "Your fair price is: " + Math.round(100*(Math.log(cost*Math.pow(distance[0]-30,3.05))/Math.log(1.09)))/100
+                        element.innerHTML = "Your fair price for this international flight is: " + Math.round(100*(Math.log(cost*Math.pow(distance[0]-30,3.05))/Math.log(1.09)))/100
                     }
                     else{
-                        element.innerHTML = "Your fair price is: " + Math.round(100*(Math.log(cost*Math.pow(distance[0]*1.03-25,1.73))/Math.log(1.1475)+10))/100
+                        element.innerHTML = "Your fair price for this domestic flight is: " + Math.round(100*(Math.log(cost*Math.pow(distance[0]*9-20,2.15))/Math.log(1.1465)))/100
                     }
                 }
                 else{
