@@ -89,9 +89,17 @@
         <script>
             const element = document.getElementById("cost");
             async function getData(){
+                try{
                 const res = await fetch('/data')
+                if(!res.ok){
+                        throw new ERROR(`HTTP ERROR: Status ${res.status}`)
+                    }
                 const resOUT = await res.json()
                 return parseFloat(resOUT.fuelcost)
+                }
+                catch(error){
+                    console.error("ERROR:",error)
+                }
             }
             async function getDistances(){
                 var url = "https://airportgap.com/api/airports/distance"
