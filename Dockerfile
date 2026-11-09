@@ -5,7 +5,9 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
 
 WORKDIR /usr/src/app
 COPY package*.json ./
+RUN mkdir -p /home/node/.cache && chown -R node:node /home/node
 RUN npm ci
+USER node
 RUN npx puppeteer browsers install chrome
 COPY . .
 CMD ["node", "index.js"]
