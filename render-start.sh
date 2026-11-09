@@ -1,5 +1,4 @@
 set -o errexit
+mkdir -p $PUPPETEER_CACHE_DIR
+npm install && npx puppeteer browsers install chrome
 
-npm install
-npm install-scripts approve puppeteer
-npx puppeteer browsers install chrome
