@@ -13,9 +13,6 @@ const getFuelCost = async() =>{
 //Here we will use Puppeteer to scrape the web
 //We want to get the price of plane fuel, which can be used for our calculations
 const browser = await puppeteer.launch({
-    executablePath:
-        process.env.NODE_ENV === "production" ? process.env.PUPPETEER_EXECUTABLE_PATH
-            :puppeteer.executablePath(),
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
     headless: false,
     defaultViewport:null
