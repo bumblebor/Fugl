@@ -12,7 +12,7 @@ const getFuelCost = async() =>{
 //Here we will use Puppeteer to scrape the web
 //We want to get the price of plane fuel, which can be used for our calculations
 const browser = await puppeteer.launch({
-    headless: true,
+    headless: false,
     defaultViewport:null
 });
 /*This creates the browser page for the scraper
