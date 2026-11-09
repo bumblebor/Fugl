@@ -1,4 +1,4 @@
 set -o errexit
 
-npm install
-npx puppeteer browsers install chrome-headless-shell
+sudo npm install
+sudo npx puppeteer browsers install chrome-headless-shell
