@@ -82,12 +82,17 @@
             <p id="cost">
                 
             </p>
+            <p id="distance">
+            
+            </p>
             <h1 id="explaination">How we calculate cost</h1>
             <p>FUGL (Flights Under Guided Lookup) calculates the fair price of your flights based off of <br> the current day's fuel cost for planes and the distance between airports. We use <br>up-to-date information about fuel price to determine the fairest price possible. FUGL <br>does not always predict exact prices, but rather aims to give a fair price for your booking.<br> As a result, prices may fluctuate above or below the price listed here.</p>
         </div>
 
         <script>
             const element = document.getElementById("cost");
+            const element2 = document.getElementById("distance");
+
             async function getData(){
                 try{
                 const res = await fetch('/data')
@@ -145,6 +150,7 @@
                     else{
                         element.innerHTML = "Your fair price for this domestic flight is: " + Math.round(100*(Math.log(cost*Math.pow(distance[0]*10-20,2.25))/Math.log(1.1365)))/100
                     }
+                    element2.innerHTML = "This flight should take about " + Math.round(((distance[0]-150)/500+150/300)*100)/100 + " hours"
                 }
                 else{
                     element.innerHTML= "Both airports cannot be the same: Please select two seperate airports"
