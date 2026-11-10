@@ -1,4 +1,3 @@
-npm ci
-npx puppeteer browsers install chrome
+npm install
 start http://couch.localhost:3000
 node index.js
