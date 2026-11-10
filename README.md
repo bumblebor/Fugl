@@ -1,5 +1,6 @@
 # README
 ## How to install
+* Install NodeJS from [NodeJS](https://nodejs.org/en/download) 
 * Open up https://github.com/bumblebor/Fugl in a web browser
 * Click on "<> Code"
 * Click "Download ZIP"
