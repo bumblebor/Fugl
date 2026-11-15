@@ -1,6 +1,6 @@
 # README
 ## How to install
-* Install NodeJS and npm from [NodeJS](https://nodejs.org/en/download/archive/v24.21.0) 
+* Install NodeJS 24.14.0 and npm from [NodeJS](https://nodejs.org/en/download/archive/v24.21.0) 
 * Open up https://github.com/bumblebor/Fugl in a web browser
 * Click on "<> Code"
 * Click "Download ZIP"
